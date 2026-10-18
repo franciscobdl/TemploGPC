@@ -124,7 +124,7 @@ document.addEventListener('keydown', (event) => {
             anguloCamara = eve.rotation.y;
             break;
         case 'Enter':
-            if(ganado){
+            if(ganado && eve !== undefined){
                 ganado = false;
                 tiempo = 0;
                 morir();
