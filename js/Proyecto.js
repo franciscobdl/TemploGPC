@@ -1,6 +1,7 @@
 var renderer, scene, camera;
 var debug = false;
 var tiempo = 0;
+var empezado = false;
 var ganado = false;
 var ctx;
 var textCanvas;
@@ -105,7 +106,7 @@ document.addEventListener('keydown', (event) => {
             controls.moveRight = true;
             break;
         case 'Space':
-            if (enSuelo && !ganado){
+            if (enSuelo && !ganado && empezado){
                 pjBody.velocity.y = controls.jumpSpeed;
                 saltando = true;
                 if (controls.moveRight || controls.moveLeft || controls.moveBackward ||controls.moveForward){
@@ -127,6 +128,10 @@ document.addEventListener('keydown', (event) => {
                 ganado = false;
                 tiempo = 0;
                 morir();
+            }
+            if (!empezado){
+                empezado = true;
+                tiempo = 0;
             }
     }
 });
@@ -734,7 +739,7 @@ function update() {
     let adelante = 0;
     let derecha = 0;
 
-    if (!ganado){
+    if (!ganado && empezado){
         tiempo += delta;
     }
 
@@ -826,6 +831,17 @@ function update() {
         ctx.font = "32px Arial";
         ctx.fillText("Tiempo total: " + tiempo.toFixed(2) + " s", textCanvas.width / 2, textCanvas.height / 2 + 50);
         ctx.fillText("Pulsa ENTER para volver a empezar", textCanvas.width / 2, textCanvas.height / 2 + 100);
+        vx = 0;
+        vz = 0;
+    }
+
+    if (!empezado){
+        ctx.textAlign = "center";
+        ctx.font = "48px Arial";
+        ctx.fillText("¡ESTE TEMPLO ES UN PELIGRO!", textCanvas.width / 2, textCanvas.height / 2);
+        ctx.font = "32px Arial";
+        ctx.fillText("Pero esconde un gran tesoro. Consíguelo lo más rapido que puedas.", textCanvas.width / 2, textCanvas.height / 2 + 50);
+        ctx.fillText("Pulsa ENTER para comenzar", textCanvas.width / 2, textCanvas.height / 2 + 100);
         vx = 0;
         vz = 0;
     }
